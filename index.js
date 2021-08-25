@@ -3,6 +3,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const db = require('./db/db.json');
+dbPath = './db/db.json';
 const { v4: uuidv4 } = require('uuid');
 
 // Uses environment port, or 3001 if not environment port not specified.
@@ -24,19 +25,33 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
 // API get route.
 // For below, is db.slice(1) necessary?
 app.get('/api/notes', (req, res) => {
     res.json(db);
 });
 
-// function for generating a new note
+// post request
+app.post('/api/notes', (req, res) => {
+    const genNewNote = newNote(req.body, db);
+    res.json(genNewNote);
+});
+
+function newNote(body, notes) {
+    // code
+}
 
 // post request for new note
 
 // function to delete note
 
 // delete request
+
+
 
 // Start the server.
 app.listen(PORT, () =>
